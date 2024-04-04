@@ -40,6 +40,9 @@ export const useStore = defineStore({
             const chat = this.chats.find(chat => chat.id === chatID)
             chat.messages.push(messageFactory({ message: message, sent: sent, avatar: sent ? SideShowIcon : RaggaIcon}))
         },
+        chatRemove(chatID) {
+            this.chats = this.chats.filter(chat => chat.id !== chatID)
+        },
         chatActivate(id) {
             this.inactivateChat()
             this.chats = this.chats.map(chat => {
