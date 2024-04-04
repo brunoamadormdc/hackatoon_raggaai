@@ -66,25 +66,8 @@ export const useStore = defineStore({
 export const randomMessages = () => {
     const messages = [
         'Só vou poder te responder no final de semana.',
-        'Apressadinho, não?',
-        'Trapaceando, é?',
-        'Bad, bad server, no donuts for you!',
-        'Aguarde, por favor...',
-        'Eu sou uma piada pra você?',
-        'Calma, Inteligêncio Artificial!',
-        'Pergunta pro Google!',
-        'Tenha paciência, amigo!',
-        'Vamos com calma, o dia do Hackatoon é só sábado!',
-        'Você não cansa de falar comigo?',
-        'Tem algo de errado nessa sua pergunta!',
-        'Existe um botão de desligar, sabia?',
-        'kkkkkkkkkkkkkkkkk',
-        'Estás ansioso demais!',
-        'Calma, jajá te dou atenção', 
-        'Tem bife de casquinha?',
-        'Tchau pexual!',
-        'The Bluetooth device is connected successfully!',
-        'Aguarde, estamos processando a sua solicitação...'
+        'Tenha paciência!',
+        'Vamos com calma, o dia do Hackatoon é só sábado!'
     ]
     return messages[Math.floor(Math.random() * messages.length)]
 }

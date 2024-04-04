@@ -1,10 +1,10 @@
 <template>
     <div class="__sidebarComponent">
-        <q-scroll-area style="height: 10vh">
+        
             <div class="__raggaLogo">
                 <img src="../../assets/images/logo.png" alt="Ragga AI" />
             </div>
-        </q-scroll-area>
+        
         <q-scroll-area style="height: 80vh">
             <template v-if="chatsHistory.length > 0">
                 <div class="__chatHistory">
@@ -54,7 +54,7 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 1rem;
+    margin-top:10px;
 
     img {
         width: 200px;
