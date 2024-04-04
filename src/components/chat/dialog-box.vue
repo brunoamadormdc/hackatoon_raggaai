@@ -4,7 +4,7 @@
             <div class="row">
                 <div class="col-11 --dialogInput">
                     <form @submit.prevent="sendMessage()">
-                        <textarea  type="text" v-model="messageValue" placeholder="Pergunte ao Ragga!"></textarea>
+                        <input  type="text" v-model="messageValue" placeholder="Pergunte ao Ragga!" />
                     </form>
                 </div>
 
@@ -57,7 +57,7 @@ export default {
         background-color: #fff;
         border-radius: 10px;
         padding: 15px;
-        margin: 0 20rem 0 20rem;
+        margin: 0 8rem 0 8rem;
         box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 
         .--dialogInput {
@@ -65,11 +65,13 @@ export default {
             align-items: center;
             form {
                 width:100%;
-                textarea {
+                input[type=text] {
                 width: 100%;
                 border: none;
                 outline: none;
-                font-size: 20px;
+                height:auto;
+                overflow:hidden;
+                font-size: 15px;
             }
             }
             
