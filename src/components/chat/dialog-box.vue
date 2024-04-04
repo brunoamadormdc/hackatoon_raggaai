@@ -3,14 +3,16 @@
         <div class="--dialogContent">
             <div class="row">
                 <div class="col-11 --dialogInput">
-                    <input type="text" v-model="messageValue" placeholder="Pergunte ao Ragga!" />
+                    <form @submit.prevent="sendMessage()">
+                        <input type="text" v-model="messageValue" placeholder="Pergunte ao Ragga!" />
+                    </form>
                 </div>
 
                 <div class="col-1 --dialogSend">
                     <i class="fa-solid fa-paper-plane" v-if="!answeringMessage" style="color:#8d6e63"
                         @click="sendMessage()"></i>
-                        <i class="fa-solid fa-spinner" v-else style="color:#8d6e63"></i>
-                    
+                    <i class="fa-solid fa-spinner" v-else style="color:#8d6e63"></i>
+
                 </div>
             </div>
         </div>
