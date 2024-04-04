@@ -60,7 +60,8 @@ export const useStore = defineStore({
             this.createMessage(chatActive.id, randomMessages() , false)
             this.answering = false
         }
-    }
+    },
+    persist:true
 })
 
 export const randomMessages = () => {

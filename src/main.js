@@ -2,6 +2,8 @@ import { createApp } from 'vue'
 import { Quasar } from 'quasar'
 import { createPinia } from 'pinia'
 import quasarIconSet from 'quasar/icon-set/svg-fontawesome-v6'
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
+
 import router from './router/index.js'
 
 // Import icon libraries
@@ -19,6 +21,8 @@ import './style.scss'
 import App from './App.vue'
 
 const pinia = createPinia()
+pinia.use(piniaPluginPersistedstate)
+
 const myApp = createApp(App)
 
 myApp.use(pinia)
