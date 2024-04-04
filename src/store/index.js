@@ -83,7 +83,7 @@ export const randomMessages = () => {
         'Calma, jajá te dou atenção', 
         'Tem bife de casquinha?',
         'Tchau pexual!',
-        'The Bluetooth device is connected successfuly!',
+        'The Bluetooth device is connected successfully!',
         'Aguarde, estamos processando a sua solicitação...'
     ]
     return messages[Math.floor(Math.random() * messages.length)]
