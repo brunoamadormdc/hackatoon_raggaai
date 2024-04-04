@@ -22,7 +22,7 @@ export const useStore = defineStore({
         },
         getChatTitleByID: (state) => (id) => {
             const messages = state.chats.find(chat => chat.id === id).messages
-            return messages.length > 0 ? messages[0].message : 'Sem Título'
+            return messages.length > 0 ? sliceStr(messages[0].message, 15)  : 'Sem Título'
         }
     },
     actions: {
@@ -76,7 +76,9 @@ export const randomMessages = () => {
     return messages[Math.floor(Math.random() * messages.length)]
 }
 
-
+export const sliceStr = (str, char) => {
+    return str.slice(0, char) + (str.length > char ? '...' : '')
+}
 
 export const chatFactory = ({
     chats = [],
