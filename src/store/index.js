@@ -80,7 +80,8 @@ export const randomMessages = () => {
         'Maldita Inclusão digital!',
         'Você tá muito ansioso! Quer um chá de camomila?',
         'Tá querendo atenção??', 
-        'Tem bife de casquinha?'
+        'Tem bife de casquinha?',
+        'Tchau pexual!'
     ]
     return messages[Math.floor(Math.random() * messages.length)]
 }
