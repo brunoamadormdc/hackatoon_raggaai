@@ -11,7 +11,7 @@
             </template>
             <template v-else>
                 <div class="__noChat">
-                    <p>Selecione um chat ou digite a sua pergunta.</p>
+                    <p>Faça alguma pergunta sobre o seriado "Os Simpsons"</p>
                 </div>
             </template>
         </q-scroll-area>

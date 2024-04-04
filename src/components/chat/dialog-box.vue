@@ -9,6 +9,7 @@
                 <div class="col-1 --dialogSend">
                     <i class="fa-solid fa-paper-plane" v-if="!answeringMessage" style="color:#8d6e63"
                         @click="sendMessage()"></i>
+                        <i class="fa-solid fa-spinner" v-else style="color:#8d6e63"></i>
                     
                 </div>
             </div>
