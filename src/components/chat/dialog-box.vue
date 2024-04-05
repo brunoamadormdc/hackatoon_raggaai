@@ -4,7 +4,7 @@
             <div class="row">
                 <div class="col-11 --dialogInput">
                     <form @submit.prevent="sendMessage()">
-                        <input  type="text" v-model="messageValue" placeholder="Pergunte ao Ragga!" />
+                        <input type="text" v-model="messageValue" placeholder="Pergunte ao Ragga!" />
                     </form>
                 </div>
 
@@ -19,20 +19,24 @@
     </div>
 </template>
 <script>
-import { computed, ref } from 'vue';
+import { computed, inject, onMounted, ref } from 'vue';
 import { useStore } from '../../store';
 
 export default {
     name: 'DialogBox',
+    
     setup() {
         const useChat = useStore();
-
         const answeringMessage = computed(() => useChat.getAnswering);
         const messageValue = ref('');
+        const raggScroll = inject('raggScroll')
 
+        raggScroll.value.setScrollPosition('vertical', raggScroll.value.getScroll().verticalSize)
+        
         const sendMessage = async () => {
             if (messageValue.value) {
                 await useChat.answerMessage(messageValue.value);
+                raggScroll.value.setScrollPosition('vertical', raggScroll.value.getScroll().verticalSize)
                 messageValue.value = '';
             }
         }
@@ -40,7 +44,10 @@ export default {
         return {
             sendMessage,
             messageValue,
-            answeringMessage
+            answeringMessage,
+            raggScroll
+            
+            
         }
     }
 
@@ -63,18 +70,20 @@ export default {
         .--dialogInput {
             display: flex;
             align-items: center;
+
             form {
-                width:100%;
-                input[type=text] {
                 width: 100%;
-                border: none;
-                outline: none;
-                height:auto;
-                overflow:hidden;
-                font-size: 15px;
+
+                input[type=text] {
+                    width: 100%;
+                    border: none;
+                    outline: none;
+                    height: auto;
+                    overflow: hidden;
+                    font-size: 15px;
+                }
             }
-            }
-            
+
         }
 
         .--dialogSend {

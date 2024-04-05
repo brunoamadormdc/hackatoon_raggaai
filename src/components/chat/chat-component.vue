@@ -1,6 +1,6 @@
 <template>
     <div class="__chatComponent">
-        <q-scroll-area style="height: 80vh">
+        <q-scroll-area style="height: 80vh" :bar-style="barStyle" :thumb-style="thumbStyle" ref="raggScroll">
             <template v-if="chatActive != null">
                 <template v-for="message in chatActive.messages" :key="message.id">
                     <div class="__chatBox">
@@ -17,26 +17,43 @@
         </q-scroll-area>
 
     </div>
-    <div class="__dialog">
+    <div class="__dialog" v-if="raggScroll != null">
         <DialogBox />
     </div>
 
 </template>
 <script>
-import { computed } from 'vue';
+import { computed, onMounted, provide, ref } from 'vue';
 import { useStore } from '../../store';
 import DialogBox from './dialog-box.vue';
 export default {
     components: {
         DialogBox
     },
-    setup() {
 
+    setup() {
+        const raggScroll = ref(null)
+        provide('raggScroll', raggScroll)
+       
         const useChat = useStore();
         const chatActive = computed(() => useChat.getChatActive);
 
         return {
-            chatActive
+            chatActive,
+            thumbStyle: {
+                right: '20px',
+                backgroundColor: 'brown',
+                width: '5px',
+                opacity: 0.3
+            },
+            barStyle: {
+                right: '20px',
+                backgroundColor: 'brown',
+                width: '5px',
+                opacity: 0
+            },
+            raggScroll
+
         }
     }
 }
@@ -46,9 +63,10 @@ export default {
     height: 90vh;
     overflow-y: auto;
     padding: 2rem 5rem 2rem 5rem;
+
     .__chatBox {
-        margin-left:40px;
-        margin-right:40px;
+        margin-left: 40px;
+        margin-right: 40px;
     }
 }
 

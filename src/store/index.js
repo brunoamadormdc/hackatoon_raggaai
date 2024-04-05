@@ -22,7 +22,7 @@ export const useStore = defineStore({
         },
         getChatTitleByID: (state) => (id) => {
             const messages = state.chats.find(chat => chat.id === id).messages
-            return messages.length > 0 ? sliceStr(messages[0].message, 15)  : 'Sem Título'
+            return messages.length > 0 ? sliceStr(messages[0].message, 15) : 'Sem Título'
         }
     },
     actions: {
@@ -38,7 +38,7 @@ export const useStore = defineStore({
         },
         createMessage(chatID, message, sent = true) {
             const chat = this.chats.find(chat => chat.id === chatID)
-            chat.messages.push(messageFactory({ message: message, sent: sent, avatar: sent ? SideShowIcon : RaggaIcon}))
+            chat.messages.push(messageFactory({ message: message, sent: sent, avatar: sent ? SideShowIcon : RaggaIcon }))
         },
         chatRemove(chatID) {
             this.chats = this.chats.filter(chat => chat.id !== chatID)
@@ -46,25 +46,35 @@ export const useStore = defineStore({
         chatActivate(id) {
             this.inactivateChat()
             this.chats = this.chats.map(chat => {
-                if(chat.id === id) chat.active = true
+                if (chat.id === id) chat.active = true
                 return chat
             })
         },
         async answerMessage(message) {
-            if(this.chats.length === 0) this.createChat()
-            
+
+            if (this.chats.length === 0) this.createChat()
+
             const chatActive = this.chats.find(chat => chat.active) ?? null
-            
-            if(!chatActive) return
-            
+
+            if (!chatActive) return
+
             this.answering = true
             this.createMessage(chatActive.id, message, true)
-            await new Promise(resolve => setTimeout(resolve, 1000))
-            this.createMessage(chatActive.id, randomMessages() , false)
-            this.answering = false
+            try {
+                await new Promise(resolve => setTimeout(resolve, 1000))
+                this.createMessage(chatActive.id, randomMessages(), false)
+                this.answering = false
+                
+            }
+            catch (e) {
+                this.createMessage(chatActive.id, 'Buguei!! Refaça a sua pergunta, por favor?', false)
+                this.answering = false
+                console.error(e)
+            }
+
         }
     },
-    persist:true
+    persist: true
 })
 
 export const randomMessages = () => {
