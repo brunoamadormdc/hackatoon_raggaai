@@ -38,7 +38,9 @@ export const useStore = defineStore({
         },
         createMessage(chatID, message, sent = true) {
             const chat = this.chats.find(chat => chat.id === chatID)
-            chat.messages.push(messageFactory({ message: message, sent: sent, avatar: sent ? SideShowIcon : RaggaIcon }))
+            let createMessage = messageFactory({ message: message, sent: sent, avatar: sent ? SideShowIcon : RaggaIcon })
+            chat.messages.push(createMessage)
+            return createMessage.id
         },
         chatRemove(chatID) {
             this.chats = this.chats.filter(chat => chat.id !== chatID)
@@ -61,10 +63,14 @@ export const useStore = defineStore({
             this.answering = true
             this.createMessage(chatActive.id, message, true)
             try {
-                await new Promise(resolve => setTimeout(resolve, 1000))
-                this.createMessage(chatActive.id, randomMessages(), false)
+                const messageID = this.createMessage(chatActive.id, '...', false)
                 this.answering = false
-                
+                await new Promise(resolve => setTimeout(resolve, 1000))
+                chatActive.messages = chatActive.messages.map(message => {
+                    if (message.id === messageID) message.message = randomMessages()
+                    return message
+                })
+
             }
             catch (e) {
                 this.createMessage(chatActive.id, 'Buguei!! Refaça a sua pergunta, por favor?', false)
@@ -81,7 +87,15 @@ export const randomMessages = () => {
     const messages = [
         'Só vou poder te responder no final de semana.',
         'Tenha paciência!',
-        'Vamos com calma, o dia do Hackatoon é só sábado!'
+        'Vamos com calma, o dia do Hackatoon é só sábado!',
+        'Tô com fome, me dá um lanche?',
+        'Felicidade, nada mais é do que boa saúde e memória fraca',
+        'Se você não sabe onde quer ir, qualquer caminho serve',
+        'Quem não sabe para onde vai, qualquer caminho serve',
+        'A vida é muito importante para ser levada a sério',
+        'A vida é uma peça de teatro que não permite ensaios',
+        'A vida é uma tragédia quando vista de perto, mas uma comédia quando vista de longe',
+        'A vida é uma peça de teatro que não permite ensaios',
     ]
     return messages[Math.floor(Math.random() * messages.length)]
 }
