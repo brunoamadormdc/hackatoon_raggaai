@@ -39,7 +39,7 @@ export const useStore = defineStore({
         createMessage(chatID, message, sent = true) {
             const chat = this.chats.find(chat => chat.chat_id === chatID)
             let createMessage = messageFactory({ message: message, sent: sent, avatar: sent ? SideShowIcon : RaggaIcon })
-            chat.messages.push(createMessage)
+            chat.messages.unshift(createMessage)
             return createMessage.message_id
         },
         chatRemove(chatID) {

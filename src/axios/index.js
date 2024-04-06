@@ -16,6 +16,7 @@ export const apiServices = {
     postQuery(path, chat) {
         const payload = {
             chat_id: chat.chat_id,
+            
             messages: chat.messages.map(message => {
                 return {
                     message_id: message.message_id,
