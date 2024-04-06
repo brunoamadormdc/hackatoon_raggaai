@@ -86,27 +86,13 @@ export const useStore = defineStore({
 export const randomMessages = () => {
     const messages = [
         'Só vou poder te responder no final de semana.',
-        'Tenha paciência!',
-        'Vamos com calma, o dia do Hackatoon é só sábado!',
-        'Tô com fome, me dá um lanche?',
-        'Felicidade, nada mais é do que boa saúde e memória fraca',
-        'Se você não sabe onde quer ir, qualquer caminho serve',
-        'Quem não sabe para onde vai, qualquer caminho serve',
-        'A vida é muito importante para ser levada a sério',
-        'A vida é uma peça de teatro que não permite ensaios',
-        'A vida é uma tragédia quando vista de perto, mas uma comédia quando vista de longe',
-        'A vida é uma peça de teatro que não permite ensaios',
     ]
     return messages[Math.floor(Math.random() * messages.length)]
 }
 
 export const randomErrorMessages = () => {
     const messages = [
-        'Foi um erro? Sim, mas não foi proposital, tente novamente',
-        'Desculpe, não entendi, pode repetir?',
-        'Não consegui entender, pode reformular a pergunta?',
-        'Sinto muito pelo meu erro, repita por favor?',
-        'Deu um erro aqui... pode repetir, por favor?'
+        'Bad, bad server, no donut for you...'
     ]
     return messages[Math.floor(Math.random() * messages.length)]
 }
