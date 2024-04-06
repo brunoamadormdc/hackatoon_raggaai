@@ -1,8 +1,8 @@
 import { defineStore } from 'pinia';
 import { v4 as uuid } from 'uuid';
-
 import RaggaIcon from '../assets/images/ragga_icon.png'
 import SideShowIcon from '../assets/images/sideshow_icon.png'
+import { apiServices } from '../axios';
 
 export const useStore = defineStore({
     id: 'chat',
@@ -21,7 +21,7 @@ export const useStore = defineStore({
             return state.answering
         },
         getChatTitleByID: (state) => (id) => {
-            const messages = state.chats.find(chat => chat.id === id).messages
+            const messages = state.chats.find(chat => chat.chat_id === id).messages
             return messages.length > 0 ? sliceStr(messages[0].message, 15) : 'Sem Título'
         }
     },
@@ -37,18 +37,18 @@ export const useStore = defineStore({
             })
         },
         createMessage(chatID, message, sent = true) {
-            const chat = this.chats.find(chat => chat.id === chatID)
+            const chat = this.chats.find(chat => chat.chat_id === chatID)
             let createMessage = messageFactory({ message: message, sent: sent, avatar: sent ? SideShowIcon : RaggaIcon })
             chat.messages.push(createMessage)
-            return createMessage.id
+            return createMessage.message_id
         },
         chatRemove(chatID) {
-            this.chats = this.chats.filter(chat => chat.id !== chatID)
+            this.chats = this.chats.filter(chat => chat.chat_id !== chatID)
         },
         chatActivate(id) {
             this.inactivateChat()
             this.chats = this.chats.map(chat => {
-                if (chat.id === id) chat.active = true
+                if (chat.chat_id === id) chat.active = true
                 return chat
             })
         },
@@ -61,19 +61,19 @@ export const useStore = defineStore({
             if (!chatActive) return
 
             this.answering = true
-            this.createMessage(chatActive.id, message, true)
+            this.createMessage(chatActive.chat_id, message, true)
             try {
-                const messageID = this.createMessage(chatActive.id, '...', false)
+                const messageID = this.createMessage(chatActive.chat_id, '...', false)
                 this.answering = false
-                await new Promise(resolve => setTimeout(resolve, 1000))
+                const {data} = await apiServices.postQuery('query', chatActive)
                 chatActive.messages = chatActive.messages.map(message => {
-                    if (message.id === messageID) message.message = randomMessages()
+                    if (message.message_id === messageID) message.message = data?.message ?? randomErrorMessages()
                     return message
                 })
 
             }
             catch (e) {
-                this.createMessage(chatActive.id, 'Buguei!! Refaça a sua pergunta, por favor?', false)
+                this.createMessage(chatActive.chat_id, randomErrorMessages(), false)
                 this.answering = false
                 console.error(e)
             }
@@ -100,22 +100,31 @@ export const randomMessages = () => {
     return messages[Math.floor(Math.random() * messages.length)]
 }
 
+export const randomErrorMessages = () => {
+    const messages = [
+        'Foi um erro? Sim, mas não foi proposital, tente novamente',
+        'Desculpe, não entendi, pode repetir?',
+        'Não consegui entender, pode reformular a pergunta?',
+        'Sinto muito pelo meu erro, repita por favor?',
+        'Deu um erro aqui... pode repetir, por favor?'
+    ]
+    return messages[Math.floor(Math.random() * messages.length)]
+}
+
 export const sliceStr = (str, char) => {
     return str.slice(0, char) + (str.length > char ? '...' : '')
 }
 
 export const chatFactory = ({
-    chats = [],
     messages = [],
-    id = uuid(),
+    chat_id = uuid(),
     active = true,
     created_at = new Date(),
 }) => {
     return {
-        chats,
         messages,
         active,
-        id,
+        chat_id,
         created_at,
     }
 }
@@ -126,7 +135,7 @@ export const messageFactory = ({
     avatar = RaggaIcon,
 }) => {
     return {
-        id: uuid(),
+        message_id: uuid(),
         created_at: new Date(),
         message: message,
         sent: sent,

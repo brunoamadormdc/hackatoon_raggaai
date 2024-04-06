@@ -2,7 +2,7 @@
     <div class="__chatComponent">
         <q-scroll-area style="height: 80vh" :bar-style="barStyle" :thumb-style="thumbStyle" ref="raggScroll">
             <template v-if="chatActive != null">
-                <template v-for="message in chatActive.messages" :key="message.id">
+                <template v-for="message in chatActive.messages" :key="message.message_id">
                     <div class="__chatBox">
                         <q-chat-message :name="message.sent ? 'Ragga Boy' : 'Ragga AI'" :avatar="message.avatar"
                             :text="[message.message]" :sent="message.sent" />
@@ -23,7 +23,7 @@
 
 </template>
 <script>
-import { computed, onMounted, provide, ref } from 'vue';
+import { computed, provide, ref } from 'vue';
 import { useStore } from '../../store';
 import DialogBox from './dialog-box.vue';
 export default {

@@ -8,10 +8,10 @@
         <q-scroll-area style="height: 80vh">
             <template v-if="chatsHistory.length > 0">
                 <div class="__chatHistory">
-                    <div class="--boxHistory" v-for="chat in chatsHistory" :key="chat.id"
-                        @click="activateChat(chat.id)">
-                        <i class="fa-solid fa-comments"></i> <span>{{ chatName(chat.id) }}</span>
-                        <span class="--chatTrash"><i class="fa-solid fa-trash" @click="removeChat(chat.id)"></i></span>
+                    <div class="--boxHistory" v-for="chat in chatsHistory" :key="chat.chat_id"
+                        @click="activateChat(chat.chat_id)">
+                        <i class="fa-solid fa-comments"></i> <span>{{ chatName(chat.chat_id) }}</span>
+                        <span class="--chatTrash"><i class="fa-solid fa-trash" @click="removeChat(chat.chat_id)"></i></span>
                     </div>
                 </div>
             </template>
