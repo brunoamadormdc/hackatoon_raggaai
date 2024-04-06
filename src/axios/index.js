@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const HTTP = axios.create({
-    baseURL: 'https://4e4c-201-27-182-224.ngrok-free.app',
+    baseURL: 'https://95d5-201-27-182-224.ngrok-free.app/',
     headers: {
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*',
@@ -16,7 +16,6 @@ export const apiServices = {
     postQuery(path, chat) {
         const payload = {
             chat_id: chat.chat_id,
-            
             messages: chat.messages.map(message => {
                 return {
                     message_id: message.message_id,

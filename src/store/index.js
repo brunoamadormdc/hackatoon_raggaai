@@ -39,7 +39,7 @@ export const useStore = defineStore({
         createMessage(chatID, message, sent = true) {
             const chat = this.chats.find(chat => chat.chat_id === chatID)
             let createMessage = messageFactory({ message: message, sent: sent, avatar: sent ? SideShowIcon : RaggaIcon })
-            chat.messages.unshift(createMessage)
+            chat.messages.push(createMessage)
             return createMessage.message_id
         },
         chatRemove(chatID) {
@@ -63,13 +63,14 @@ export const useStore = defineStore({
             this.answering = true
             this.createMessage(chatActive.chat_id, message, true)
             try {
-                const messageID = this.createMessage(chatActive.chat_id, '...', false)
+                
                 this.answering = false
                 const {data} = await apiServices.postQuery('query', chatActive)
-                chatActive.messages = chatActive.messages.map(message => {
+                this.createMessage(chatActive.chat_id, data?.message ?? randomErrorMessages(), false)
+               /*  chatActive.messages = chatActive.messages.map(message => {
                     if (message.message_id === messageID) message.message = data?.message ?? randomErrorMessages()
                     return message
-                })
+                }) */
 
             }
             catch (e) {
